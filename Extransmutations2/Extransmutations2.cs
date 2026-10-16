@@ -18,6 +18,7 @@ internal class Extransmutations2 : QuintessentialMod, IDataMod {
     GlyphRevolution.LoadContent(GlyphRevolution.Variant.TRI);
     GlyphInversion.LoadContent();
     GlyphCompletion.LoadContent();
+    GlyphAeration.LoadContent();
   }
   public override void LoadCompatContent() { }
   public override void FinaliseContent() { }
@@ -34,7 +35,9 @@ internal class Extransmutations2 : QuintessentialMod, IDataMod {
       QApi.AddRecipe(Instance, e.Item2, IdObj($"{partId.name}-{e.Item1}"), partId);
     }
   }
-  internal static void TryTransmute(Sim sim, Part part, HexIndex partPos) {
+  internal enum DelAnim { DISPOSAL, NONE, CONSUME }
+  internal static void TryTransmute(Sim sim, Part part, HexIndex partPos,
+  DelAnim delAnim = DelAnim.DISPOSAL) {
     var offsetFlash = new Vector2(-72, 0);
     if (sim.RecipeInputs.GetValueOrDefault(partPos) is AtomReference input
     && sim.RecipeOutputs.GetValueOrDefault(partPos) is AtomType output) {
@@ -44,13 +47,21 @@ internal class Extransmutations2 : QuintessentialMod, IDataMod {
     }
     else if (sim.RecipeInputs.GetValueOrDefault(partPos) is AtomReference onlyIn) {
       onlyIn.molecule.RemoveAtom(onlyIn.pos);
-      sim.solutionEditor.glyphEffects.Add(
-        new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-        HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(partPos)),
-        Resources.destroyAnim, 30f, offsetFlash, 0f)
-      );
+      if (delAnim == DelAnim.DISPOSAL) {
+        sim.solutionEditor.glyphEffects.Add(
+          new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
+          HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(partPos)),
+          Resources.destroyAnim, 30f, offsetFlash, 0f)
+        );
+      }
+      else if (delAnim == DelAnim.CONSUME) {
+        sim.solutionEditor.consumptionEffects.Add(
+          new ConsumptionEffect(sim.solutionEditor,
+          onlyIn));
+      }
     }
-    else if (sim.RecipeOutputs.GetValueOrDefault(partPos) is AtomType onlyOut) {
+    else if (sim.RecipeOutputs.GetValueOrDefault(partPos) is AtomType onlyOut
+    && !sim.HasAtomAt(part, partPos, true)) {
       Molecule newMol = new();
       newMol.AddAtom(new(onlyOut), part.InFrontBy(partPos));
       sim.molecules.Add(newMol);

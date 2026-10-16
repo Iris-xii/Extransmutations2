@@ -15,7 +15,8 @@
       "cardinal-revolution-line":"Leyline of Card. Revolution",
       "cardinal-revolution-tri":"Triad of Card. Revolution",
       "cardinal-inversion":"Glyph of Card. Inversion",
-      "cardinal-completion":"Glyph of Card. Completion"
+      "cardinal-completion":"Glyph of Card. Completion",
+      "aeration":"Glyph of Aeration"
     },
     "parts":{
       "cardinal-revolution-line": {
@@ -33,6 +34,10 @@
       "cardinal-completion": {
         "":"Glyph of Cardinal Completion",
         "description":"The Glyph of Cardinal Completion transmutes 3 different cardinals and 1 salt atom into 4 atoms of the missing cardinal. Berlo's Wheel may be placed over the bowls to mediate in the use of the glyph, fulfilling the requirement of said bowls without it itself being transmuted."
+      },
+      "aeration": {
+        "":"Glyph of Aeration",
+        "description":"The Glyph of Aeration turns an atom of salt into Air."
       }
     }
   }
