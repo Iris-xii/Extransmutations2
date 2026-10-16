@@ -1,0 +1,34 @@
+{
+  "extransmutations2": {
+    "": "Extransmutations",
+    "description": "A collection of extra Opus Magnum Glyphs, or Extra Transmutations, or Extransmutations, if you will. These are so far mostly concerned with cardinals and are meant to be used in puzzles without berlo/duplication.",
+    "atoms": {
+      "test_atom": {
+        "": "Test Atom",
+        "elemental": "Elemental Test Atom"
+      }
+    },
+    "permission_sections": {
+      "extransmutations-section":"Extransmutations"
+    },
+    "permissions": {
+      "cardinal-revolution-line":"Leyline of Card. Revolution",
+      "cardinal-revolution-tri":"Triad of Card. Revolution",
+      "cardinal-inversion":"Glyph of Card. Inversion"
+    },
+    "parts":{
+      "cardinal-revolution-line": {
+        "":"Leyline of Cardinal Revolution",
+        "description":"The Leyline of Cardinal Revolution transmutes three matching atoms of the same cardinal into two salt atoms, and the next cardinal in the sequence Air -> Water -> Earth -> Fire -> Air (Clockwise along the chart of alchemical primes)"
+      },
+      "cardinal-revolution-tri": {
+        "":"Triad of Cardinal Revolution",
+        "description":"The Triad of Cardinal Revolution transmutes three matching atoms of the same cardinal into two salt atoms, and the next cardinal in the sequence Air -> Water -> Earth -> Fire -> Air (Clockwise along the chart of alchemical primes)"
+      },
+      "cardinal-inversion": {
+        "":"Glyph of Cardinal Inversion",
+        "description":"The glyph of cardinal inversion transmutes two matching cardinals into an opposing cardinal and salt."
+      }
+    }
+  }
+}
