@@ -32,8 +32,7 @@ internal static class GlyphCompletion {
       }
       if (sim.GetAtomReference(part, SALT_POS, allowPartAttachedAtoms: false, out var s1)
       && s1.atomType == AtomTypes.salt) {
-        sim.RecipeInputs[SALT_POS] = s1; // normal salt
-        Log("Set salt");
+        sim.RecipeInputs[SALT_POS] = s1; // normal salt 
         saltAtomTransmute = s1;
         hasSalt = true;
       }
