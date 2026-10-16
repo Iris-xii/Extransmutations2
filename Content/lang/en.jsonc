@@ -17,7 +17,8 @@
       "cardinal-inversion":"Glyph of Card. Inversion",
       "cardinal-completion":"Glyph of Card. Completion",
       "aeration":"Glyph of Aeration",
-      "induction":"Glyph of Induction"
+      "induction":"Glyph of Induction",
+      "compaction":"Glyph of Compaction"
     },
     "parts":{
       "cardinal-revolution-line": {
@@ -43,6 +44,10 @@
       "induction": {
         "":"Glyph of Induction",
         "description":"The Glyph of Induction can attach its hollow hex to another glyph. Whenever a transmutation takes place in the attached hex, the glyph of induction will transmute an atom of salt into fire. It is not permitted to attach multiple induction hooks to the same hex, or to attach it to another glyph of induction."
+      },
+      "compaction": {
+        "":"Glyph of Compaction",
+        "description":"The Glyph of Compaction transmutes an atom of salt into an atom of Earth if it has 3 or more bonds. A full triplex counts as three bonds."
       }
     }
   }
