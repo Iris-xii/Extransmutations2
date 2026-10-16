@@ -50,6 +50,7 @@ internal static class GlyphInversion {
       renderer.RenderUpright(Resources.calcifySpotTexture, CALC_SPOT, Vector2.Zero);
       renderer.RenderUpright(Resources.transmutationInversionSpotTexture, TRAN_SPOT, Vector2.Zero);
     });
+    QApi.AddPartTypeToPanel(cardinalInversion, false);
     QApi.BindGlyphCylce(cardinalInversion, new(PartCycleDelegate.PartCycleExecutionType.Normal,
     (Sim sim, Part part, PartSimState simState, GlyphRecipe recipe, bool isCycleStart) => {
       if(recipe.Predicate.InvokeAndClear(sim,part)) {
@@ -83,6 +84,5 @@ internal static class GlyphInversion {
       ("air-earth",Recipe(AtomTypes.air,AtomTypes.earth)),
     ];
     AddAllRecipes(ID, recipes);
-    QApi.AddPartTypeToPanel(cardinalInversion, false);
   }
 }
