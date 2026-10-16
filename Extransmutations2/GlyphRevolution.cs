@@ -123,15 +123,15 @@ internal static class GlyphRevolution {
       ("water-earth",Recipe(v, AtomTypes.water, AtomTypes.earth)),
       ("earth-fire",Recipe(v, AtomTypes.earth, AtomTypes.fire)),
       ("fire-air",Recipe(v, AtomTypes.fire, AtomTypes.air)),
-      ("weird",new((sim, part) => {
-        if(sim.GetAtomReference(part,TransmuteSpot(v),false,out var gold)
-        && gold.atomType == AtomTypes.gold) {
-          sim.RecipeInputs[TransmuteSpot(v)] = gold;
-          sim.RecipeOutputs[CalcSpot1(v)] = AtomTypes.quicksilver;
-          return true;
-        }
-        return false;
-      }))
+      //("weird",new((sim, part) => {
+      //  if(sim.GetAtomReference(part,TransmuteSpot(v),false,out var gold)
+      //  && gold.atomType == AtomTypes.gold) {
+      //    sim.RecipeInputs[TransmuteSpot(v)] = gold;
+      //    sim.RecipeOutputs[CalcSpot1(v)] = AtomTypes.quicksilver;
+      //    return true;
+      //  }
+      //  return false;
+      //}))
     ];
     foreach (var r in recipesDef) {
       QApi.AddRecipe(Instance,

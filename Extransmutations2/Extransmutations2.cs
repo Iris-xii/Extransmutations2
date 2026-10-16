@@ -30,7 +30,7 @@ internal class Extransmutations2 : QuintessentialMod, IDataMod {
   internal static void AddAllRecipes<T>(Identifier partId, T recipes)
   where T : IEnumerable<(string, GlyphRecipe)> {
     foreach (var e in recipes) {
-      QApi.AddRecipe(Instance, e.Item2, IdObj(e.Item1), partId);
+      QApi.AddRecipe(Instance, e.Item2, IdObj($"{partId.name}-{e.Item1}"), partId);
     }
   }
   internal static void TryTransmute(Sim sim, Part part, HexIndex partPos) {
