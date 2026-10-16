@@ -19,6 +19,7 @@ internal class Extransmutations2 : QuintessentialMod, IDataMod {
     GlyphInversion.LoadContent();
     GlyphCompletion.LoadContent();
     GlyphAeration.LoadContent();
+    GlyphInduction.LoadContent();
   }
   public override void LoadCompatContent() { }
   public override void FinaliseContent() { }
