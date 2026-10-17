@@ -16,13 +16,14 @@ internal class Extransmutations2 : QuintessentialMod, IDataMod {
   public static Identifier LiquidationDonor2 { get => IdObj("$liquidation-donor-2"); }
   public static Identifier LiquidationDonor1 { get => IdObj("$liquidation-donor-1"); }
   public static Identifier LiquidationSink2 { get => IdObj("$liquidation-sink-2"); }
-  public static Identifier LiquidationSink1 { get => IdObj("$liquidation-sink-1"); }
+  public static Identifier LiquidationSink1 { get => IdObj("$liquidation-sink-1"); } 
 
   internal static string Section = "extransmutations-section";
 
   public override void Load() { }
 
   public override void LoadContent() {
+    Ichor.LoadContent();
     GlyphRevolution.LoadContent(GlyphRevolution.Variant.LINE);
     GlyphRevolution.LoadContent(GlyphRevolution.Variant.TRI);
     GlyphInversion.LoadContent();

@@ -3,9 +3,9 @@
     "": "Extransmutations",
     "description": "A collection of extra Opus Magnum Glyphs, or Extra Transmutations, or Extransmutations, if you will. These are so far mostly concerned with cardinals and are meant to be used in puzzles without berlo/duplication.",
     "atoms": {
-      "test_atom": {
-        "": "Test Atom",
-        "elemental": "Elemental Test Atom"
+      "ichor": {
+        "": "Ichor",
+        "elemental": "Elemental Ichor"
       }
     },
     "permission_sections": {
