@@ -18,7 +18,8 @@
       "cardinal-completion":"Glyph of Card. Completion",
       "aeration":"Glyph of Aeration",
       "induction":"Glyph of Induction",
-      "compaction":"Glyph of Compaction"
+      "compaction":"Glyph of Compaction",
+      "liquidation":"Glyph of Liquidation"
     },
     "parts":{
       "cardinal-revolution-line": {
@@ -48,6 +49,10 @@
       "compaction": {
         "":"Glyph of Compaction",
         "description":"The Glyph of Compaction transmutes an atom of salt into an atom of Earth if it has 3 or more bonds. A full triplex counts as three bonds."
+      },
+      "liquidation": {
+        "":"Glyph of Liquidation",
+        "description":"The Glyph of Liquidation siphons fluidity from the central atom to donate it to the atoms in the bowls on the sides, and is able to function with either just one or both of said bowls being occupied."
       }
     }
   }

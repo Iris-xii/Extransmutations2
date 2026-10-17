@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Quintessential;
 
 namespace Extransmutations2;
@@ -9,6 +12,12 @@ internal class Extransmutations2 : QuintessentialMod, IDataMod {
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
   public override string ModId => "extransmutations2";
+
+  public static Identifier LiquidationDonor2 { get => IdObj("$liquidation-donor-2"); }
+  public static Identifier LiquidationDonor1 { get => IdObj("$liquidation-donor-1"); }
+  public static Identifier LiquidationSink2 { get => IdObj("$liquidation-sink-2"); }
+  public static Identifier LiquidationSink1 { get => IdObj("$liquidation-sink-1"); }
+
   internal static string Section = "extransmutations-section";
 
   public override void Load() { }
@@ -19,8 +28,9 @@ internal class Extransmutations2 : QuintessentialMod, IDataMod {
     GlyphInversion.LoadContent();
     GlyphCompletion.LoadContent();
     GlyphAeration.LoadContent();
-    GlyphInduction.LoadContent();
+    GlyphLiquidation.LoadContent();
     GlyphCompaction.LoadContent();
+    GlyphInduction.LoadContent();
   }
   public override void LoadCompatContent() { }
   public override void FinaliseContent() { }
@@ -31,6 +41,15 @@ internal class Extransmutations2 : QuintessentialMod, IDataMod {
   internal static void Log(string s) => Logger.Log($"[Extransmutations] {s}");
   internal static string IdStr(string key) => $"{Instance.ModId}:{key}";
   internal static string IdObj(string key) => new Identifier(Instance.ModId, key);
+  internal static bool HasTag(AtomReference ar, Identifier tag) {
+    if (!AtomTag.AtomTags.TryGetValue(tag, out var atomTag)) return false;
+    return atomTag.HasAtom(ar);
+  }
+  internal static bool HasTag(AtomReference ar, Identifier tag, out Identifier? target) {
+    target = null;
+    if (!AtomTag.AtomTags.TryGetValue(tag, out var atomTag)) return false;
+    return atomTag.HasAtom(ar, out target);
+  }
   internal static void AddAllRecipes<T>(Identifier partId, T recipes)
   where T : IEnumerable<(string, GlyphRecipe)> {
     foreach (var e in recipes) {

@@ -1,0 +1,13 @@
+{
+  "extransmutations2:$liquidation-donor-2": {
+    "om:quicksilver":"om:lead", 
+    "unstable_elements:aether":"om:salt"
+  },
+  "extransmutations2:$liquidation-donor-1": {},
+  "extransmutations2:$liquidation-sink-2": {
+    "om:lead":"om:quicksilver"
+  },
+  "extransmutations2:$liquidation-sink-1": {
+    "om:salt":"om:water"
+  } 
+}
