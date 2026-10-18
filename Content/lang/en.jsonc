@@ -25,7 +25,8 @@
       "compaction":"Glyph of Compaction",
       "liquidation":"Glyph of Liquidation",
       "dejection":"Glyph of Dejection",
-      "recombination":"Glyph of Recombination"
+      "recombination":"Glyph of Recombination",
+      "restoration":"Glyph of Restoration"
     },
     "parts":{
       "cardinal-revolution-line": {
@@ -67,6 +68,10 @@
       "recombination": {
         "":"Glyph of Recombination",
         "description":"The Glyph of Recombination destroys two atoms of salt to turn an atom of Ichor back into salt."
+      },
+      "restoration": {
+        "":"Glyph of Restoration",
+        "description":"The Glyph of Restoration destroys all atoms of ichor present in the molecule over the ichor bowl and all atoms of the cardinal over the cardinal bowl when the number of ichor atoms and the number of said cardinal atoms present is exactly the same."
       }
     }
   }
