@@ -35,6 +35,7 @@ internal class Extransmutations2 : QuintessentialMod, IDataMod {
     GlyphInduction.LoadContent();
     // -- ICHOR GLYPHS --
     GlyphDejection.LoadContent();
+    GlyphRecombination.LoadContent();
   }
   public override void LoadCompatContent() { }
   public override void FinaliseContent() { }

@@ -24,7 +24,8 @@
       "induction":"Glyph of Induction",
       "compaction":"Glyph of Compaction",
       "liquidation":"Glyph of Liquidation",
-      "dejection":"Glyph of Dejection"
+      "dejection":"Glyph of Dejection",
+      "recombination":"Glyph of Recombination"
     },
     "parts":{
       "cardinal-revolution-line": {
@@ -62,6 +63,10 @@
       "dejection": {
         "":"Glyph of Dejection",
         "description":"The Glyph of Dejection transmutes a cardinal into an atom of Ichor and produces two cardinals one step backwards along the Cardinal Cycle (Fire -> x2 Earth -> x2 Water -> x2 Air -> x2 Fire)"
+      },
+      "recombination": {
+        "":"Glyph of Recombination",
+        "description":"The Glyph of Recombination destroys two atoms of salt to turn an atom of Ichor back into salt."
       }
     }
   }
