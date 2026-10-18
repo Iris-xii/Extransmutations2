@@ -23,7 +23,8 @@
       "aeration":"Glyph of Aeration",
       "induction":"Glyph of Induction",
       "compaction":"Glyph of Compaction",
-      "liquidation":"Glyph of Liquidation"
+      "liquidation":"Glyph of Liquidation",
+      "dejection":"Glyph of Dejection"
     },
     "parts":{
       "cardinal-revolution-line": {
@@ -57,6 +58,10 @@
       "liquidation": {
         "":"Glyph of Liquidation",
         "description":"The Glyph of Liquidation siphons fluidity from the central atom to donate it to the atoms in the bowls on the sides, and is able to function with either just one or both of said bowls being occupied."
+      },
+      "dejection": {
+        "":"Glyph of Dejection",
+        "description":"The Glyph of Dejection transmutes a cardinal into an atom of Ichor and produces two cardinals one step backwards along the Cardinal Cycle (Fire -> x2 Earth -> x2 Water -> x2 Air -> x2 Fire)"
       }
     }
   }

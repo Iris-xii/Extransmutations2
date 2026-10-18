@@ -1,7 +1,7 @@
 {
   "mod_id": "extransmutations2",
-  "version": "0.0.1",
-  "mod_page_url": "",
+  "version": "0.1.0",
+  "mod_page_url": "https://github.com/Iris-xii/Extransmutations2/",
   "dll": "Extransmutations2.dll",
   "authors": ["Iris"],
   "icon": "textures/extransmutations2/icon",

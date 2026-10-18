@@ -27,18 +27,19 @@ internal static class ETUtils {
     }
   }
   internal static void DrawIris(Part part, Vector2 pos, SolutionEditorBase editor, PartRenderer renderer,
-  Texture[] irisTextures,
+  HexIndex irisLocation, Texture[] irisTextures,
   int processingIndex = 0) {
     var time = editor.GetCycleTime();
     var intermState = editor.GetIntermState(part, pos);
     PartSimState pss = editor.GetSimulation().GetSimState(part);
 
-    var offset = intermState.pos + HexGrid.standardGrid.ToPixelCoords(new HexIndex(1, 0)).Rotated(intermState.rotation);
-    renderer.RenderRotating(Assets.textures.parts.animismus.output_under_iris, new HexIndex(1, 0), Vector2.Zero);
+    var offset = intermState.pos + HexGrid.standardGrid.ToPixelCoords(irisLocation).Rotated(intermState.rotation);
+    renderer.RenderRotating(Assets.textures.parts.animismus.output_under_iris, irisLocation, Vector2.Zero);
 
     int irisFrame = 15;
     bool afterIrisOpens = false;
-    var targetAt = pss.isProcessing ? Molecule.CreateMonoatomic(pss.processingAtoms[0]) : null;
+    var targetAt = (pss.isProcessing && pss.processingAtoms.Length > processingIndex) ?
+      Molecule.CreateMonoatomic(pss.processingAtoms[processingIndex]) : null;
     if (pss.isProcessing) {
       irisFrame = Utils.Clamp((int)(Utils.InterpolateLinear(1f, -1f, time) * 16f), 0, 15);
       afterIrisOpens = time > 0.5f;
@@ -46,23 +47,27 @@ internal static class ETUtils {
         Editor.RenderMolecule(targetAt, offset, new HexIndex(0, 0), 0f, 1f, time, 1f, false, null);
       }
     }
-    renderer.RenderUpright(irisTextures[irisFrame], new HexIndex(1, 0), Vector2.Zero);
-    renderer.RenderRotating(Assets.textures.parts.animismus.output_above_iris, new HexIndex(1, 0), Vector2.Zero);
+    renderer.RenderUpright(irisTextures[irisFrame], irisLocation, Vector2.Zero);
+    renderer.RenderRotating(Assets.textures.parts.animismus.output_above_iris, irisLocation, Vector2.Zero);
     if (pss.isProcessing && afterIrisOpens) {
       Editor.RenderMolecule(targetAt, offset, new HexIndex(0, 0), 0f, 1f, time, 1f, false, null);
     }
   }
   internal enum DelAnim { DISPOSAL, NONE, CONSUME }
+  internal enum ProdType { APPEAR, GLYPH_PRODUCE }
   internal static void TryTransmute(Sim sim, Part part, HexIndex partPos,
-  DelAnim delAnim = DelAnim.DISPOSAL) {
+  DelAnim delAnim = DelAnim.DISPOSAL,
+  ProdType prodType = ProdType.APPEAR,
+  int processingIndex = 0) {
+    var pss = sim.simulationDict[part];
     var offsetFlash = new Vector2(-72, 0);
     if (sim.RecipeInputs.GetValueOrDefault(partPos) is AtomReference input
-    && sim.RecipeOutputs.GetValueOrDefault(partPos) is AtomType output) {
+    && sim.RecipeOutputs.GetValueOrDefault(partPos) is AtomType output) { 
       input.molecule.ReplaceAtom(output, input.pos);
       input.atom.transmutationEffect = new TransmutationEffect(sim.solutionEditor,
           TransmutationEffectRenderMode.AsEffect, input.atomType, Assets.textures.atoms.projection_effect, 30f);
     }
-    else if (sim.RecipeInputs.GetValueOrDefault(partPos) is AtomReference onlyIn) {
+    else if (sim.RecipeInputs.GetValueOrDefault(partPos) is AtomReference onlyIn) { 
       onlyIn.molecule.RemoveAtom(onlyIn.pos);
       if (delAnim == DelAnim.DISPOSAL) {
         sim.solutionEditor.glyphEffects.Add(
@@ -78,15 +83,27 @@ internal static class ETUtils {
       }
     }
     else if (sim.RecipeOutputs.GetValueOrDefault(partPos) is AtomType onlyOut
-    && !sim.HasAtomAt(part, partPos, true)) {
-      Molecule newMol = new();
-      newMol.AddAtom(new(onlyOut), part.InFrontBy(partPos));
-      sim.molecules.Add(newMol);
-      sim.solutionEditor.glyphEffects.Add(
-        new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-        HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(partPos)),
-        Resources.destroyAnim, 30f, offsetFlash, 0f)
-      );
+    && !sim.HasAtomAt(part, partPos, true)) { 
+      if (prodType == ProdType.APPEAR) {
+        Molecule newMol = new();
+        newMol.AddAtom(new(onlyOut), part.InFrontBy(partPos));
+        sim.molecules.Add(newMol);
+        sim.solutionEditor.glyphEffects.Add(
+          new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
+          HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(partPos)),
+          Resources.destroyAnim, 30f, offsetFlash, 0f)
+        );
+      }
+      else if (prodType == ProdType.GLYPH_PRODUCE) {
+        if (pss.processingAtoms is null) {
+          pss.processingAtoms = new AtomType[processingIndex + 1];
+        }
+        else if (pss.processingAtoms.Length <= processingIndex) {
+          Array.Resize(ref pss.processingAtoms, processingIndex + 1);
+        }
+        pss.processingAtoms[processingIndex] = onlyOut;
+        pss.isProcessing = true; 
+      }
     }
   }
 }

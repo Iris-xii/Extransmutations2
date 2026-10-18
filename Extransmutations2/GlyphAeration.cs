@@ -20,6 +20,7 @@ internal static class GlyphAeration {
       && salt.atomType == from
       && !salt.isHeldByArm
       && !salt.inMultiAtomMolecule
+      && !sim.HasAtomAt(part,OUT_SPOT,true)
       ) {
         sim.RecipeInputs[SALT_SPOT] = salt;
         sim.RecipeOutputs[OUT_SPOT] = to;
@@ -51,13 +52,13 @@ internal static class GlyphAeration {
     };
     QApi.AddPartType(Instance, glyphAeration, ID.name,
     (part, pos, editor, renderer) => {
-      Vector2 centre = Resources.aerationBase.GetHalfSize(); 
+      Vector2 centre = Resources.aerationBase.GetHalfSize();
       renderer.RenderBase(Resources.aerationBase, new Vector2(-1, -1), centre, 0f);
       renderer.RenderBase(Resources.aerationBaseDetail, new Vector2(-1, -1), centre, 0f);
       renderer.RenderRotating(Resources.bowlHole, new HexIndex(0, 0), Vector2.Zero);
       renderer.RenderUpright(Resources.saltBowlGlyphSpotWhite, new HexIndex(0, 0), Vector2.Zero);
       // iris 
-      DrawIris(part, pos, editor, renderer, Resources.airIris);
+      DrawIris(part, pos, editor, renderer, new HexIndex(1, 0), Resources.airIris);
     });
     QApi.BindGlyphCycle(glyphAeration, new(PartCycleDelegate.PartCycleExecutionType.Normal,
     (sim, part, pss, recipe, isCycleStart) => {
@@ -65,8 +66,9 @@ internal static class GlyphAeration {
         Molecule newMol = new();
         newMol.AddAtom(new(pss.processingAtoms[0]), part.InFrontBy(OUT_SPOT));
         sim.molecules.Add(newMol);
+        pss.isProcessing = false;
       }
-      if (recipe.Predicate.InvokeAndClear(sim, part)) {
+      if (isCycleStart && recipe.Predicate.InvokeAndClear(sim, part)) {
         TryTransmute(sim, part, SALT_SPOT, DelAnim.CONSUME);
         if (sim.RecipeOutputs.GetValueOrDefault(OUT_SPOT) is AtomType outA) {//hardcoded
           pss.processingAtoms ??= [null];
