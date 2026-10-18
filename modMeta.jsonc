@@ -7,9 +7,9 @@
   "icon": "textures/extransmutations2/icon",
   "mappings": "",
   "dependencies": {
-    "quintessential_core": "[0.8.0,)",
-    "quintessential_data": "[0.8.0,)",
-    "quintessential_ui": "[0.8.0,)"
+    "quintessential_core": "[0.8.1,)",
+    "quintessential_data": "[0.8.1,)",
+    "quintessential_ui": "[0.8.1,)"
   },
   "conflicts": []
 }

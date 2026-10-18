@@ -3,6 +3,7 @@ using Quintessential;
 
 namespace Extransmutations2;
 
+using static ETUtils;
 using static Extransmutations2;
 
 internal static class GlyphRevolution {
@@ -140,7 +141,7 @@ internal static class GlyphRevolution {
         partId: NamespacedID(v));
     }
 
-    QApi.BindGlyphCylce(type, new(PartCycleDelegate.PartCycleExecutionType.Normal,
+    QApi.BindGlyphCycle(type, new(PartCycleDelegate.PartCycleExecutionType.Normal,
     (Sim sim, Part part, PartSimState simState, GlyphRecipe recipe, bool isCycleStart) => {
       if (recipe.Predicate.InvokeAndClear(sim, part)) {
         TryTransmute(sim,part,CalcSpot1(v));

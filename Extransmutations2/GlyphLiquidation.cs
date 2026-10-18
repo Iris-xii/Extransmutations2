@@ -5,6 +5,7 @@ using Quintessential;
 
 namespace Extransmutations2;
 
+using static ETUtils;
 using static Extransmutations2;
 
 internal static class GlyphLiquidation {
@@ -39,7 +40,7 @@ internal static class GlyphLiquidation {
     });
     QApi.AddPartTypeToPanel(glyphLiquidation, false);
     QApi.AddRecipe(Instance, new((sim, part) => { return true; }), IdObj("liquidation-always"), ID); // liquidation does not use recipes
-    QApi.BindGlyphCylce(glyphLiquidation, new(PartCycleDelegate.PartCycleExecutionType.Normal,
+    QApi.BindGlyphCycle(glyphLiquidation, new(PartCycleDelegate.PartCycleExecutionType.Normal,
     (sim, part, pss, recipe, isCycleStart) => {
       AtomReference[] liqUpRef = [.. LIQ_UP
       .Select(h => {sim.GetAtomReference(part,h,false,out var a); return a;})

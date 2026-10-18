@@ -5,6 +5,7 @@ using Quintessential;
 
 namespace Extransmutations2;
 
+using static ETUtils;
 using static Extransmutations2;
 
 /// <summary> Ichor Atom stuff </summary>
@@ -45,7 +46,5 @@ public static class Ichor {
       shadow = Assets.textures.atoms.shadow,
     };
     QApi.AddAtomType(Instance, Type, "ichor");
-  }
-  internal static void PostLoad() { 
-  }
+  } 
 }

@@ -8,8 +8,12 @@
         "elemental": "Elemental Ichor"
       }
     },
+    "naming": {
+      "tainted": "Tainted {0}"
+    },
     "permission_sections": {
-      "extransmutations-section":"Extransmutations"
+      "extransmutations-section":"Extransmutations",
+      "extransmutations-ichor-section":"Extransmutations: Ichor"
     },
     "permissions": {
       "cardinal-revolution-line":"Leyline of Card. Revolution",

@@ -5,6 +5,7 @@ using Quintessential;
 
 namespace Extransmutations2;
 
+using static ETUtils;
 using static Extransmutations2;
 
 internal static class GlyphCompaction {
@@ -46,7 +47,7 @@ internal static class GlyphCompaction {
       renderer.RenderRotating(Resources.bowlTexture, new(0, 0), Vector2.Zero);
       renderer.RenderUpright(Resources.earthGlyph, new(0, 0), Vector2.Zero);
     });
-    QApi.BindGlyphCylce(glyphCompaction, new(PartCycleDelegate.PartCycleExecutionType.Normal,
+    QApi.BindGlyphCycle(glyphCompaction, new(PartCycleDelegate.PartCycleExecutionType.Normal,
     (sim, part, pss, recipe, isCycleStart) => {
       if(recipe.Predicate.InvokeAndClear(sim,part)) {
         TryTransmute(sim,part,BOWL);

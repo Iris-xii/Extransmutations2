@@ -5,6 +5,7 @@ using Quintessential;
 
 namespace Extransmutations2;
 
+using static ETUtils;
 using static Extransmutations2;
 
 internal static class GlyphCompletion {
@@ -94,7 +95,7 @@ internal static class GlyphCompletion {
       });
     QApi.AddPartTypeToPanel(cardinalCompletion, false);
 
-    QApi.BindGlyphCylce(cardinalCompletion, new(PartCycleDelegate.PartCycleExecutionType.Normal,
+    QApi.BindGlyphCycle(cardinalCompletion, new(PartCycleDelegate.PartCycleExecutionType.Normal,
     (sim, part, simState, recipe, isCycleStart) => {
       if (recipe.Predicate.InvokeAndClear(sim, part)) {
         foreach (var cardPos in CARD_POS) { TryTransmute(sim, part, cardPos); }

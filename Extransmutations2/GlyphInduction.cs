@@ -5,6 +5,7 @@ using Quintessential;
 
 namespace Extransmutations2;
 
+using static ETUtils;
 using static Extransmutations2;
 
 internal static class GlyphInduction {

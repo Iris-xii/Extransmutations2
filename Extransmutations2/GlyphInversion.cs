@@ -3,6 +3,7 @@ using Quintessential;
 
 namespace Extransmutations2;
 
+using static ETUtils;
 using static Extransmutations2;
 
 internal static class GlyphInversion { 
@@ -51,7 +52,7 @@ internal static class GlyphInversion {
       renderer.RenderUpright(Resources.transmutationInversionSpotTexture, TRAN_SPOT, Vector2.Zero);
     });
     QApi.AddPartTypeToPanel(cardinalInversion, false);
-    QApi.BindGlyphCylce(cardinalInversion, new(PartCycleDelegate.PartCycleExecutionType.Normal,
+    QApi.BindGlyphCycle(cardinalInversion, new(PartCycleDelegate.PartCycleExecutionType.Normal,
     (Sim sim, Part part, PartSimState simState, GlyphRecipe recipe, bool isCycleStart) => {
       if(recipe.Predicate.InvokeAndClear(sim,part)) {
         TryTransmute(sim,part,CALC_SPOT);
