@@ -40,34 +40,37 @@ internal static class GlyphInduction {
     QApi.AddPartTypeToPanel(glyphInduction, false);
     QApi.AddCycleEvent(new(CycleEvent.CycleEventExecutionType.First, First));
     QApi.AddCycleEvent(new(CycleEvent.CycleEventExecutionType.Last, Last));
-  }
+  } 
 
-  internal static Dictionary<Atom, AtomType> inductionDict = [];
-  internal static HashSet<HexIndex> inductionBowls = [];
   internal static void First(Sim sim, CycleEvent.CycleEventExecutionType executionType) {
-    inductionDict = [];
+    var pSim = (patch_Sim)((object)sim);
+    pSim.Extransmutations2InductionDict ??= [];
+    pSim.Extransmutations2InductionBowls ??= [];
+    pSim.Extransmutations2InductionDict.Clear();
+    pSim.Extransmutations2InductionBowls.Clear();
     foreach (var mol in sim.molecules) {
       foreach (var atom in mol.GetAtoms()) {
-        inductionDict[atom.Value] = atom.Value.atomType;
+        pSim.Extransmutations2InductionDict[atom.Value] = atom.Value.atomType;
       }
     }
     foreach (var part in sim.solutionEditor.GetSolution().parts) {
       if (part.GetType().Id != ID) continue;
-      inductionBowls.Add(part.InFrontBy(BOWL));
+      pSim.Extransmutations2InductionBowls.Add(part.InFrontBy(BOWL));
     }
   }
   internal static void Last(Sim sim, CycleEvent.CycleEventExecutionType executionType) {
+    var pSim = (patch_Sim)((object)sim);
     HashSet<HexIndex> changed = [];
     foreach (var mol in sim.molecules) {
       foreach (var atom in mol.GetAtoms()) {
-        if (inductionDict.ContainsKey(atom.Value)) {
-          if (inductionDict[atom.Value] != atom.Value.atomType) {
+        if (pSim.Extransmutations2InductionDict!.ContainsKey(atom.Value)) {
+          if (pSim.Extransmutations2InductionDict[atom.Value] != atom.Value.atomType) {
             changed.Add(atom.Key);
           }
         }
       }
     }
-    changed.RemoveWhere(h => inductionBowls.Contains(h));
+    changed.RemoveWhere(h => pSim.Extransmutations2InductionBowls!.Contains(h));
     foreach (var part in sim.solutionEditor.GetSolution().parts) {
       if (part.GetType().Id != ID) continue;
       if (changed.Contains(part.InFrontBy(HOOK))

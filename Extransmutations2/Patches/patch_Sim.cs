@@ -12,6 +12,8 @@ using MonoMod.Utils;
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
  
 public class patch_Sim {
+  public Dictionary<Atom, AtomType>? Extransmutations2InductionDict = [];
+  public HashSet<HexIndex>? Extransmutations2InductionBowls = [];
   public static bool ExtransmutationsIchorSuppression(bool suppress, Sim s) => 
     suppress || Extransmutations2.Ichor.ShouldSuppress(s);
     
