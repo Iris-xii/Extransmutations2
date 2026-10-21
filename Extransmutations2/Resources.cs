@@ -11,6 +11,7 @@ internal struct GlyphTex {
   public required Texture @base;
   public required Texture glow;
   public required Texture stroke;
+  public required Texture tray;
 }
 
 internal static class Resources {
@@ -20,14 +21,16 @@ internal static class Resources {
     var path = Path.Combine(["textures",Instance.ModId,s]);
     return AssetLoaderHelper.LoadTexture(path);
   }
-  internal static GlyphTex Base(string glyphFolder) {
+  internal static GlyphTex Glyph(string glyphFolder) {
     var pathBase = Path.Combine(["textures",Instance.ModId,glyphFolder,"base"]);
     var pathGlow = Path.Combine(["textures",Instance.ModId,glyphFolder,"glow"]);
     var pathStroke = Path.Combine(["textures",Instance.ModId,glyphFolder,"stroke"]);
+    var pathTray = Path.Combine(["textures",Instance.ModId,glyphFolder,"tray"]);
     return new() {
       @base = AssetLoaderHelper.LoadTexture(pathBase),
       glow = AssetLoaderHelper.LoadTexture(pathGlow),
       stroke = AssetLoaderHelper.LoadTexture(pathStroke),
+      tray = AssetLoaderHelper.LoadTexture(pathTray),
     };
   }
   internal static Texture[] Anim(string folder, string file, int count, int pad = 4) {
@@ -60,7 +63,6 @@ internal static class Resources {
   public static Texture cardinalCycleBaseV2 = TexOld("textures/parts/cardinal_revolution_v2/base");
   public static Texture cardinalCycleGlowV2 = TexOld("textures/parts/cardinal_revolution_v2/glow");
   public static Texture cardinalCycleStrokeV2 = TexOld("textures/parts/cardinal_revolution_v2/stroke");
-
 
   public static Texture cardinalInversionBase = TexOld("textures/parts/cardinal_inversion/base");
   public static Texture cardinalInversionGlow = TexOld("textures/parts/cardinal_inversion/glow");
@@ -121,6 +123,12 @@ internal static class Resources {
   public static Texture[] ichorGlowArray = Anim("textures/parts/ichor_glow.array", "a", 9);
   public static Texture[] bowlGlow = Anim("textures/parts/bowl_glow.array", "a", 9);
   public static Texture[] aerationBreathe = Anim("textures/parts/aeration_breath.array", "breath", 16);
+  public static Texture[] waterDownGlow = Anim("textures/parts/water_down.array", "a", 9);
+  public static Texture[] waterUpGlow = Anim("textures/parts/water_up.array", "a", 9);
+  public static Texture waterDown = TexOld("textures/parts/water_down");
+  public static Texture waterUp = TexOld("textures/parts/water_up");
+
+  public static GlyphTex quintConjunction = Glyph("quint-conjunction");
 
   public static Sound aerationSound = Sound("aeration_sound");
   public static Sound cardinalCompletionSound = Sound("cardinal_completion_sound");
@@ -132,10 +140,9 @@ internal static class Resources {
   public static Sound recombinationSound = Sound("recombination_sound");
   public static Sound restorationSound = Sound("restoration_sound");
   public static Sound liquidationSound = Sound("liquidation_sound");
-  public static Texture[] waterDownGlow = Anim("textures/parts/water_down.array", "a", 9);
-  public static Texture[] waterUpGlow = Anim("textures/parts/water_up.array", "a", 9);
-  public static Texture waterDown = TexOld("textures/parts/water_down");
-  public static Texture waterUp = TexOld("textures/parts/water_up");
+  public static Sound quintConjunctionSinkSound = Sound("sim_step");
+  public static Sound quintConjunctionFinishSound = Sound("glyph_unification");
+  
 
 
   internal static Sound Sound(string sRaw, float volume = 0.4f) { 

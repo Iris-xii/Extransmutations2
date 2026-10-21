@@ -26,7 +26,8 @@
       "liquidation":"Glyph of Liquidation",
       "dejection":"Glyph of Dejection",
       "recombination":"Glyph of Recombination",
-      "restoration":"Glyph of Restoration"
+      "restoration":"Glyph of Restoration",
+      "quint-conjunction":"Glyph of Quintessence Conjunction"
     },
     "parts":{
       "cardinal-revolution-line": {
@@ -72,6 +73,10 @@
       "restoration": {
         "":"Glyph of Restoration",
         "description":"The Glyph of Restoration destroys all atoms of ichor present in the molecule over the ichor bowl and all atoms of the cardinal over the cardinal bowl when the number of ichor atoms and the number of said cardinal atoms present is exactly the same."
+      },
+      "quint-conjunction": {
+        "":"Glyph of Quintessence Conjunction",
+        "description":"The Glyph of Quintessence Conjunction slowly accumulates each of the four cardinals, and when all four have been input it outputs an atom of quintessence."
       }
     }
   }
