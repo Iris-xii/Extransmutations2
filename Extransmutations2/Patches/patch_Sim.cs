@@ -14,6 +14,7 @@ using MonoMod.Utils;
 public class patch_Sim {
   public Dictionary<Atom, AtomType>? Extransmutations2InductionDict = [];
   public HashSet<HexIndex>? Extransmutations2InductionBowls = [];
+  public Dictionary<HexIndex,int>? Extransmutations2InductionHooks = [];
   public static bool ExtransmutationsIchorSuppression(bool suppress, Sim s) => 
     suppress || Extransmutations2.Ichor.ShouldSuppress(s);
     

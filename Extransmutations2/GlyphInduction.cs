@@ -40,14 +40,16 @@ internal static class GlyphInduction {
     QApi.AddPartTypeToPanel(glyphInduction, false);
     QApi.AddCycleEvent(new(CycleEvent.CycleEventExecutionType.First, First));
     QApi.AddCycleEvent(new(CycleEvent.CycleEventExecutionType.Last, Last));
-  } 
+  }
 
   internal static void First(Sim sim, CycleEvent.CycleEventExecutionType executionType) {
     var pSim = (patch_Sim)((object)sim);
     pSim.Extransmutations2InductionDict ??= [];
     pSim.Extransmutations2InductionBowls ??= [];
+    pSim.Extransmutations2InductionHooks ??= [];
     pSim.Extransmutations2InductionDict.Clear();
     pSim.Extransmutations2InductionBowls.Clear();
+    pSim.Extransmutations2InductionHooks.Clear();
     foreach (var mol in sim.molecules) {
       foreach (var atom in mol.GetAtoms()) {
         pSim.Extransmutations2InductionDict[atom.Value] = atom.Value.atomType;
@@ -56,6 +58,12 @@ internal static class GlyphInduction {
     foreach (var part in sim.solutionEditor.GetSolution().parts) {
       if (part.GetType().Id != ID) continue;
       pSim.Extransmutations2InductionBowls.Add(part.InFrontBy(BOWL));
+      if (pSim.Extransmutations2InductionHooks.ContainsKey(part.InFrontBy(HOOK))) {
+        pSim.Extransmutations2InductionHooks[part.InFrontBy(HOOK)] += 1;
+      }
+      else {
+        pSim.Extransmutations2InductionHooks.Add(part.InFrontBy(HOOK), 1);
+      }
     }
   }
   internal static void Last(Sim sim, CycleEvent.CycleEventExecutionType executionType) {
@@ -71,11 +79,14 @@ internal static class GlyphInduction {
       }
     }
     changed.RemoveWhere(h => pSim.Extransmutations2InductionBowls!.Contains(h));
+    foreach (var KV in pSim.Extransmutations2InductionHooks!) { if (KV.Value > 1) { changed.Remove(KV.Key); } }
     foreach (var part in sim.solutionEditor.GetSolution().parts) {
       if (part.GetType().Id != ID) continue;
       if (changed.Contains(part.InFrontBy(HOOK))
       && sim.GetAtomReference(part, BOWL, false, out var saltRef)
       && saltRef.atomType == AtomTypes.salt) {
+        sim.RecipeInputs.Clear();
+        sim.RecipeOutputs.Clear();
         sim.RecipeInputs[BOWL] = saltRef;
         sim.RecipeOutputs[BOWL] = AtomTypes.fire;
         TryTransmute(sim, part, BOWL);
