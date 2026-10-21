@@ -39,10 +39,10 @@ public static class Ichor {
       Id = IdObj("ichor"),
       defaultName = "ichor",
       matteTextures = new() {
-        diffuse = Resources.Tex("textures/atoms/ichor_diffuse"),
-        shade = Resources.Tex("textures/atoms/ichor_shade")
+        diffuse = Resources.TexOld("textures/atoms/ichor_diffuse"),
+        shade = Resources.TexOld("textures/atoms/ichor_shade")
       },
-      symbol = Resources.Tex("textures/atoms/ichor"),
+      symbol = Resources.TexOld("textures/atoms/ichor"),
       shadow = Assets.textures.atoms.shadow,
     };
     QApi.AddAtomType(Instance, Type, "ichor");
