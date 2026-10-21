@@ -8,7 +8,6 @@ using static Extransmutations2.Extransmutations2;
 namespace Extransmutations2;
 
 internal static class ETUtils {
-  internal static void Log(string s) => Logger.Log($"[Extransmutations] {s}");
   internal static string IdStr(string key) => $"{Instance.ModId}:{key}";
   internal static string IdObj(string key) => new Identifier(Instance.ModId, key);
   internal static bool HasTag(AtomReference ar, Identifier tag) {

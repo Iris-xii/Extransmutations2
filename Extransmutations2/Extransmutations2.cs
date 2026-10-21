@@ -44,5 +44,5 @@ internal class Extransmutations2 : QuintessentialMod, IDataMod {
   public override void PostLoad() { }
   public override void Unload() { }
 
-
+  internal static void Log(string s) => Logger.Log($"[Extransmutations] {s}"); 
 }
