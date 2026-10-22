@@ -10,6 +10,10 @@ namespace Extransmutations2;
 internal static class ETUtils {
   internal static string IdStr(string key) => $"{Instance.ModId}:{key}";
   internal static string IdObj(string key) => new Identifier(Instance.ModId, key);
+  internal static void EPlay(this Sound sound, Sim sim) {
+    sound.isPlaying = false;
+    sound.PlaySound(sim.solutionEditor.method_506());
+  }
   internal static bool HasTag(AtomReference ar, Identifier tag) {
     if (!AtomTag.AtomTags.TryGetValue(tag, out var atomTag)) return false;
     return atomTag.HasAtom(ar);
@@ -61,12 +65,12 @@ internal static class ETUtils {
     var pss = sim.simulationDict[part];
     var offsetFlash = new Vector2(-72, 0);
     if (sim.RecipeInputs.GetValueOrDefault(partPos) is AtomReference input
-    && sim.RecipeOutputs.GetValueOrDefault(partPos) is AtomType output) { 
+    && sim.RecipeOutputs.GetValueOrDefault(partPos) is AtomType output) {
       input.molecule.ReplaceAtom(output, input.pos);
       input.atom.transmutationEffect = new TransmutationEffect(sim.solutionEditor,
           TransmutationEffectRenderMode.AsEffect, input.atomType, Assets.textures.atoms.projection_effect, 30f);
     }
-    else if (sim.RecipeInputs.GetValueOrDefault(partPos) is AtomReference onlyIn) { 
+    else if (sim.RecipeInputs.GetValueOrDefault(partPos) is AtomReference onlyIn) {
       onlyIn.molecule.RemoveAtom(onlyIn.pos);
       if (delAnim == DelAnim.DISPOSAL) {
         sim.solutionEditor.glyphEffects.Add(
@@ -82,7 +86,7 @@ internal static class ETUtils {
       }
     }
     else if (sim.RecipeOutputs.GetValueOrDefault(partPos) is AtomType onlyOut
-    && !sim.HasAtomAt(part, partPos, true)) { 
+    && !sim.HasAtomAt(part, partPos, true)) {
       if (prodType == ProdType.APPEAR) {
         Molecule newMol = new();
         newMol.AddAtom(new(onlyOut), part.InFrontBy(partPos));
@@ -101,7 +105,7 @@ internal static class ETUtils {
           Array.Resize(ref pss.processingAtoms, processingIndex + 1);
         }
         pss.processingAtoms[processingIndex] = onlyOut;
-        pss.isProcessing = true; 
+        pss.isProcessing = true;
       }
     }
   }

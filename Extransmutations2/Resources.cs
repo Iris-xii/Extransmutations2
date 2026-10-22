@@ -140,8 +140,9 @@ internal static class Resources {
   public static Sound recombinationSound = Sound("recombination_sound");
   public static Sound restorationSound = Sound("restoration_sound");
   public static Sound liquidationSound = Sound("liquidation_sound");
-  public static Sound quintConjunctionSinkSound = Sound("sim_step");
-  public static Sound quintConjunctionFinishSound = Sound("glyph_unification");
+  public static Sound[] quintConjunctionSinkSound = 
+    [Sound("1st_card"),Sound("2nd_card"),Sound("3rd_card"),Sound("4th_card")];
+  public static Sound quintConjunctionFinishSound = Sound("conjunction_unify");
   
 
 

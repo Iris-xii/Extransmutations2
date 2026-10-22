@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Quintessential;
 
 namespace Extransmutations2;
@@ -10,6 +11,7 @@ using static Extransmutations2;
 
 internal static class GlyphQuintConjunction {
   const uint WATER_FLAG = 1, FIRE_FLAG = 2, EARTH_FLAG = 4, AIR_FLAG = 8;
+  const uint PLAYED_LAST_CHIME_FLAG = 16;
   const uint FLAG_ALL = WATER_FLAG | FIRE_FLAG | EARTH_FLAG | AIR_FLAG;
   internal static HexIndex CARD_HOLE = new(0, 0);
   internal static HexIndex QUINT_OUTPUT = new(1, 0);
@@ -35,12 +37,12 @@ internal static class GlyphQuintConjunction {
     ) {
       sim.RecipeInputs[CARD_HOLE] = maybeCard;
       pPart.Extransmutations2Uint |= setsFlag;
-      if ((pPart.Extransmutations2Uint & FLAG_ALL) == FLAG_ALL && !sim.HasAtomAt(part,QUINT_OUTPUT,true)) { 
+      if ((pPart.Extransmutations2Uint & FLAG_ALL) == FLAG_ALL && !sim.HasAtomAt(part, QUINT_OUTPUT, true)) {
         sim.RecipeOutputs[QUINT_OUTPUT] = AtomTypes.quintessence;
       }
       return true;
     }
-    else if((pPart.Extransmutations2Uint & FLAG_ALL) == FLAG_ALL && !sim.HasAtomAt(part,QUINT_OUTPUT,true)) {
+    else if ((pPart.Extransmutations2Uint & FLAG_ALL) == FLAG_ALL && !sim.HasAtomAt(part, QUINT_OUTPUT, true)) {
       sim.RecipeOutputs[QUINT_OUTPUT] = AtomTypes.quintessence;
       return true;
     }
@@ -89,18 +91,24 @@ internal static class GlyphQuintConjunction {
         newMol.AddAtom(new(pss.processingAtoms[0]), part.InFrontBy(QUINT_OUTPUT));
         sim.molecules.Add(newMol);
         pss.isProcessing = false;
+        Resources.quintConjunctionFinishSound.EPlay(sim);
       }
       if (isCycleStart && recipe.Predicate.InvokeAndClear(sim, part)) {
         TryTransmute(sim, part, CARD_HOLE, delAnim: DelAnim.CONSUME);
         if (sim.RecipeOutputs.GetValueOrDefault(QUINT_OUTPUT) is AtomType quintType) {
           TryTransmute(sim, part, QUINT_OUTPUT, prodType: ProdType.GLYPH_PRODUCE);
+          int stage = BitOperations.PopCount(pPart.Extransmutations2Uint & FLAG_ALL) - 1;
+          if (stage >= Resources.quintConjunctionSinkSound.Length) { stage = 0; } //don't crash over sounds
+          if((pPart.Extransmutations2Uint & PLAYED_LAST_CHIME_FLAG) == 0) {Resources.quintConjunctionSinkSound[stage].EPlay(sim);}
+          if(stage == 3) {pPart.Extransmutations2Uint |= PLAYED_LAST_CHIME_FLAG;}
+
           pPart.Extransmutations2Uint = 0;
-          Resources.quintConjunctionFinishSound.isPlaying = false;
-          Resources.quintConjunctionFinishSound.PlaySound(sim.solutionEditor.method_506());
         }
         else {
-          Resources.quintConjunctionSinkSound.isPlaying = false;
-          Resources.quintConjunctionSinkSound.PlaySound(sim.solutionEditor.method_506());
+          int stage = BitOperations.PopCount(pPart.Extransmutations2Uint & FLAG_ALL) - 1;
+          if (stage >= Resources.quintConjunctionSinkSound.Length) { stage = 0; } //don't crash over sounds
+          if((pPart.Extransmutations2Uint & PLAYED_LAST_CHIME_FLAG) == 0) {Resources.quintConjunctionSinkSound[stage].EPlay(sim);}
+          if(stage == 3) {pPart.Extransmutations2Uint |= PLAYED_LAST_CHIME_FLAG;}
         }
         return true;
       }
