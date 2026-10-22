@@ -18,7 +18,7 @@ internal static class GlyphQuintConjunction {
   internal static Identifier ID = IdObj("quint-conjunction");
   internal static PartType TYPE = new() {
     Id = ID,
-    cost = 30, // Expensive-er
+    cost = 20 + ARM_COST*2,
     isFullHexCover = true,
     glowTexture = Resources.quintConjunction.glow,
     strokeTexture = Resources.quintConjunction.stroke,

@@ -8,6 +8,7 @@ using static Extransmutations2.Extransmutations2;
 namespace Extransmutations2;
 
 internal static class ETUtils {
+  internal static int ARM_COST = 20;
   internal static string IdStr(string key) => $"{Instance.ModId}:{key}";
   internal static string IdObj(string key) => new Identifier(Instance.ModId, key);
   internal static void EPlay(this Sound sound, Sim sim) {
@@ -33,7 +34,7 @@ internal static class ETUtils {
   HexIndex irisLocation, Texture[] irisTextures,
   int processingIndex = 0) {
     var time = editor.GetCycleTime();
-    var intermState = editor.GetIntermState(part, pos);
+    IntermediatePartState intermState = editor.GetIntermState(part, pos);
     PartSimState pss = editor.GetSimulation().GetSimState(part);
 
     var offset = intermState.pos + HexGrid.standardGrid.ToPixelCoords(irisLocation).Rotated(intermState.rotation);
@@ -41,19 +42,19 @@ internal static class ETUtils {
 
     int irisFrame = 15;
     bool afterIrisOpens = false;
-    var targetAt = (pss.isProcessing && pss.processingAtoms.Length > processingIndex) ?
+    var targetMol = (pss.isProcessing && pss.processingAtoms.Length > processingIndex) ?
       Molecule.CreateMonoatomic(pss.processingAtoms[processingIndex]) : null;
     if (pss.isProcessing) {
       irisFrame = Utils.Clamp((int)(Utils.InterpolateLinear(1f, -1f, time) * 16f), 0, 15);
       afterIrisOpens = time > 0.5f;
-      if (!afterIrisOpens && targetAt != null) {
-        Editor.RenderMolecule(targetAt, offset, new HexIndex(0, 0), 0f, 1f, time, 1f, false, null);
+      if (!afterIrisOpens && targetMol != null) {
+        Editor.RenderMolecule(targetMol, offset, new(0, 0), 0f, 1f, time, 1f, false, null);
       }
     }
     renderer.RenderUpright(irisTextures[irisFrame], irisLocation, Vector2.Zero);
     renderer.RenderRotating(Assets.textures.parts.animismus.output_above_iris, irisLocation, Vector2.Zero);
     if (pss.isProcessing && afterIrisOpens) {
-      Editor.RenderMolecule(targetAt, offset, new HexIndex(0, 0), 0f, 1f, time, 1f, false, null);
+      Editor.RenderMolecule(targetMol, offset, new(0, 0), 0f, 1f, time, 1f, false, null);
     }
   }
   internal enum DelAnim { DISPOSAL, NONE, CONSUME }
