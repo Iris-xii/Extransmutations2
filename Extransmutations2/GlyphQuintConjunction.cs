@@ -72,7 +72,7 @@ internal static class GlyphQuintConjunction {
     }
   }
   internal static void LoadContent() {
-    QApi.AddPuzzlePermission(Instance, ID.name, ID.name, Section);
+    QApi.AddPuzzlePermission(Instance, ID.name, ID.name, Section,length: 3);
     QApi.AddPartType(Instance, TYPE, ID.name,
     (part, pos, editor, renderer) => {
       Vector2 centre = Resources.quintConjunction.@base.GetHalfSize();
