@@ -1,15 +1,15 @@
 {
   "mod_id": "extransmutations2",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "mod_page_url": "https://github.com/Iris-xii/Extransmutations2/",
   "dll": "Extransmutations2.dll",
   "authors": ["Iris","Charlotte and The Daemon (Glyph Sounds)","Greenfield (Dejection iris graphics)"],
 //  "icon": "textures/extransmutations2/icon",
   "mappings": "",
   "dependencies": {
-    "quintessential_core": "[0.8.1,)",
-    "quintessential_data": "[0.8.1,)",
-    "quintessential_ui": "[0.8.1,)"
+    "quintessential_core": "[0.9.0,)",
+    "quintessential_data": "[0.9.0,)",
+    "quintessential_ui": "[0.9.0,)"
   },
   "conflicts": []
 }

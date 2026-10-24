@@ -14,8 +14,11 @@ internal static class GlyphDejection {
   internal static HexIndex CARDINAL_BOWL = new(0, 0);
   internal static Identifier ID = IdObj("dejection");
 
-  internal static GlyphRecipe Recipe(AtomType from, AtomType to) => new(
+  internal static GlyphRecipe Recipe(AtomType from, AtomType to, Func<Sim, Part, bool>? check = null) {
+    check ??= AlwaysTrueCheck;
+    return new(
     (sim, part) => {
+      if(!check(sim,part)) {return false;}
       if (sim.GetAtomReference(part, CARDINAL_BOWL, false, out var initialCard)
       && initialCard.atomType == from
       && PROD_HOLE.All(h => !sim.HasAtomAt(part, h, true))) {
@@ -27,6 +30,8 @@ internal static class GlyphDejection {
       return false;
     }
   );
+  }
+
   internal static void LoadContent() {
     QApi.AddPuzzlePermission(Instance, ID.name, ID.name, IchorSection);
     PartType glyphDejection = new() {

@@ -10,11 +10,14 @@ internal static class GlyphInversion {
   internal static HexIndex CALC_SPOT = new(1, 0);
   internal static HexIndex TRAN_SPOT = new(0, 0);
   internal static Identifier ID = IdObj("cardinal-inversion");
-  internal static GlyphRecipe Recipe(AtomType from,AtomType to) => new(
-    (sim,part) => {
-      if(sim.GetAtomReference(part,TRAN_SPOT,false,out var transAtom) 
+  internal static GlyphRecipe Recipe(AtomType from, AtomType to, Func<Sim, Part, bool>? check = null) {
+    check ??= AlwaysTrueCheck;
+    return new(
+    (sim, part) => {
+      if(!check(sim,part)) {return false;}
+      if (sim.GetAtomReference(part, TRAN_SPOT, false, out var transAtom)
       && transAtom.atomType == from
-      && sim.GetAtomReference(part,CALC_SPOT,false, out var calcAtom)
+      && sim.GetAtomReference(part, CALC_SPOT, false, out var calcAtom)
       && calcAtom.atomType == from
       ) {
         sim.RecipeInputs[TRAN_SPOT] = transAtom;
@@ -26,6 +29,8 @@ internal static class GlyphInversion {
       return false;
     }
   );
+  }
+
   internal static void LoadContent() {
     PartType cardinalInversion = new() {
       Id = ID,

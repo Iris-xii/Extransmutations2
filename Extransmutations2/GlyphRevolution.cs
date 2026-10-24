@@ -85,8 +85,11 @@ internal static class GlyphRevolution {
     helper.RenderUpright(Resources.transmutationCycleSpotTexture, TransmuteSpot(v), Vector2.Zero);
   }
 
-  internal static GlyphRecipe Recipe(Variant v, AtomType cardinalFrom, AtomType cardinalTo) {
+  internal static GlyphRecipe Recipe(Variant v, AtomType cardinalFrom, AtomType cardinalTo,
+  Func<Sim,Part,bool>? check = null) {
+    check ??= AlwaysTrueCheck;
     return new((sim, part) => {
+      if(!check(sim,part)) {return false;}
       if (sim.GetAtomReference(part, CalcSpot1(v), false, out var calc1)
       && calc1.atomType == cardinalFrom
       && sim.GetAtomReference(part, CalcSpot2(v), false, out var calc2)

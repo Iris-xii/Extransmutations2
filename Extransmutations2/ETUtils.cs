@@ -8,9 +8,10 @@ using static Extransmutations2.Extransmutations2;
 namespace Extransmutations2;
 
 internal static class ETUtils {
-  internal static int ARM_COST = 20;
+  internal const int ARM_COST = 20; 
   internal static string IdStr(string key) => $"{Instance.ModId}:{key}";
   internal static string IdObj(string key) => new Identifier(Instance.ModId, key);
+  internal static bool AlwaysTrueCheck(Sim _,Part __) => true;
   internal static void EPlay(this Sound sound, Sim sim) {
     sound.isPlaying = false;
     sound.PlaySound(sim.solutionEditor.method_506());
@@ -28,6 +29,17 @@ internal static class ETUtils {
   where T : IEnumerable<(string, GlyphRecipe)> {
     foreach (var e in recipes) {
       QApi.AddRecipe(Instance, e.Item2, IdObj($"{partId.name}-{e.Item1}"), partId);
+    }
+  }
+  extension(QApi) {
+    internal static void AddPermissionIfNotPresent(QuintessentialMod mod,
+    string id,
+    string displayName = "",
+    string sectionName = "",
+    int length = 2) {
+      var searchId = mod.GetIdentifier(id);
+      foreach (PuzzleOption po in QApi.PuzzleOptions) { if (po.ID == searchId) { return; } }
+      QApi.AddPuzzlePermission(mod, id, displayName, sectionName, length);
     }
   }
   internal static void DrawIris(Part part, Vector2 pos, SolutionEditorBase editor, PartRenderer renderer,

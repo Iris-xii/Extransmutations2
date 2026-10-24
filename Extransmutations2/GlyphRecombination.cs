@@ -13,8 +13,11 @@ internal static class GlyphRecombination {
   internal static HexIndex[] SALT_HOLE = [new(1, 0), new(0, 1)];
   internal static HexIndex ICHOR_BOWL = new(0, 0);
 
-  internal static GlyphRecipe Recipe(AtomType saltElem, AtomType ichorToNeutralize, AtomType neutralizeTo) =>
-    new((sim, part) => {
+  internal static GlyphRecipe Recipe(AtomType saltElem, AtomType ichorToNeutralize, AtomType neutralizeTo,
+  Func<Sim, Part, bool>? check = null) {
+    check ??= AlwaysTrueCheck;
+    return new((sim, part) => {
+      if(!check(sim,part)) {return false;}
       if (sim.GetAtomReference(part, SALT_HOLE[0], false, out var salt1)
       && salt1.atomType == saltElem
       && !salt1.isHeldByArm
@@ -23,7 +26,7 @@ internal static class GlyphRecombination {
       && salt2.atomType == saltElem
       && !salt2.isHeldByArm
       && !salt2.inMultiAtomMolecule
-      && sim.GetAtomReference(part,ICHOR_BOWL,false,out var ichorRef)
+      && sim.GetAtomReference(part, ICHOR_BOWL, false, out var ichorRef)
       && ichorRef.atomType == ichorToNeutralize
       ) {
         sim.RecipeInputs[SALT_HOLE[0]] = salt1;
@@ -34,6 +37,7 @@ internal static class GlyphRecombination {
       }
       return false;
     });
+  }
 
   internal static void LoadContent() {
     QApi.AddPuzzlePermission(Instance, ID.name, ID.name, IchorSection);

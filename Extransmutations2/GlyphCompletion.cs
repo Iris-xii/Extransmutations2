@@ -7,16 +7,20 @@ namespace Extransmutations2;
 
 using static ETUtils;
 using static Extransmutations2;
-
+using Card4 = (AtomType,AtomType,AtomType,AtomType);
 internal static class GlyphCompletion {
 
   internal static HexIndex[] CARD_POS = [new(1, 0), new(0, 0), new(1, -1)];
   internal static HexIndex SALT_POS = new(0, 1);
   internal static Identifier ID = IdObj("cardinal-completion");
 
-  internal static GlyphRecipe Recipe(AtomType[] allCardTypes) {
+  internal static GlyphRecipe Recipe(Card4 card4,
+  Func<Sim,Part,bool>? check = null) {
+    check ??= AlwaysTrueCheck;
     return new(
     (sim, part) => {
+      AtomType[] allCardTypes = [card4.Item1,card4.Item2,card4.Item3,card4.Item4];
+      if(!check(sim,part)) {return false;}
       List<(HexIndex, AtomReference)> transmuteCandidates = [];
       AtomReference? saltAtomTransmute = null;
       bool hasSalt = false;
@@ -131,7 +135,7 @@ internal static class GlyphCompletion {
       return false;
     }));
     (string, GlyphRecipe)[] recipes = [
-      ("cardinal-cycle",Recipe([AtomTypes.water,AtomTypes.fire,AtomTypes.earth,AtomTypes.air]))
+      ("cardinal-cycle",Recipe((AtomTypes.water,AtomTypes.fire,AtomTypes.earth,AtomTypes.air)))
     ];
     AddAllRecipes(ID, recipes);
   }

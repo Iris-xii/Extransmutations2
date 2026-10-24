@@ -34,12 +34,16 @@ internal class Extransmutations2 : QuintessentialMod, IDataMod {
     GlyphCompaction.LoadContent();
     GlyphInduction.LoadContent();
     GlyphQuintConjunction.LoadContent();
+    // -- COMPAT GLYPHS --
+    GlyphExtraordinary.LoadContent();
     // -- ICHOR GLYPHS --
     GlyphDejection.LoadContent();
     GlyphRecombination.LoadContent();
     GlyphRestoration.LoadContent();
   }
-  public override void LoadCompatContent() { }
+  public override void LoadCompatContent() {
+    Compat.UAP.LoadCompatContent();
+  }
   public override void FinaliseContent() { }
 
   public override void PostLoad() { }

@@ -14,19 +14,24 @@ internal static class GlyphRestoration {
   internal static HexIndex ICHOR_BOWL = new(0, 0);
   internal static Identifier ID = IdObj("restoration");
 
-  internal static GlyphRecipe Recipe(AtomType destroyableCardinal) => new((sim, part) => {
-    if (sim.GetAtomReference(part, CARD_BOWL, false, out var cardRef)
-    && cardRef.atomType == destroyableCardinal
-    && sim.GetAtomReference(part, ICHOR_BOWL, false, out var ichorRef)
-    && ichorRef.atomType == Ichor.Type) {
-      sim.RecipeInputs[CARD_BOWL] = cardRef;
-      sim.RecipeInputs[ICHOR_BOWL] = ichorRef;
-      sim.RecipeOutputs[CARD_BOWL] = cardRef.atomType;
-      sim.RecipeOutputs[ICHOR_BOWL] = ichorRef.atomType;
-      return true;
-    }
-    return false;
-  });
+  internal static GlyphRecipe Recipe(AtomType destroyableCardinal, Func<Sim, Part, bool>? check = null) {
+    check ??= AlwaysTrueCheck;
+    return new((sim, part) => {
+      if(!check(sim,part)) {return false;}
+      if (sim.GetAtomReference(part, CARD_BOWL, false, out var cardRef)
+      && cardRef.atomType == destroyableCardinal
+      && sim.GetAtomReference(part, ICHOR_BOWL, false, out var ichorRef)
+      && ichorRef.atomType == Ichor.Type) {
+        sim.RecipeInputs[CARD_BOWL] = cardRef;
+        sim.RecipeInputs[ICHOR_BOWL] = ichorRef;
+        sim.RecipeOutputs[CARD_BOWL] = cardRef.atomType;
+        sim.RecipeOutputs[ICHOR_BOWL] = ichorRef.atomType;
+        return true;
+      }
+      return false;
+    });
+  }
+
   internal static void LoadContent() {
     QApi.AddPuzzlePermission(Instance, ID.name, ID.name, IchorSection);
     PartType glyphRestoration = new() {
