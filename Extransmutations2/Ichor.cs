@@ -46,5 +46,6 @@ public static class Ichor {
       shadow = Assets.textures.atoms.shadow,
     };
     QApi.AddAtomType(Instance, Type, "ichor");
+    QApi.AddMoleculeName(Type,Instance.Translate("naming.tainted"));
   } 
 }
