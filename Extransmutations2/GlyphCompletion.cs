@@ -5,7 +5,7 @@ using Quintessential;
 
 namespace Extransmutations2;
 
-using static ETUtils;
+using static IrisUtils;
 using static Extransmutations2;
 using Card4 = (AtomType,AtomType,AtomType,AtomType);
 internal static class GlyphCompletion {

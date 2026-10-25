@@ -5,7 +5,7 @@ using System.Numerics;
 using Quintessential;
 namespace Extransmutations2.Compat;
 
-using static ETUtils;
+using static IrisUtils;
 using static Extransmutations2;
 
 using Recipes = (string, GlyphRecipe)[];

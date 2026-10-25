@@ -3,7 +3,7 @@ using Quintessential;
 
 namespace Extransmutations2;
 
-using static ETUtils;
+using static IrisUtils;
 using static Extransmutations2;
 
 internal static class GlyphRevolution {

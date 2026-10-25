@@ -5,7 +5,7 @@ using System.Linq;
 using Quintessential;
 
 namespace Extransmutations2;
-using static ETUtils;
+using static IrisUtils;
 
 internal class Extransmutations2 : QuintessentialMod, IDataMod {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.

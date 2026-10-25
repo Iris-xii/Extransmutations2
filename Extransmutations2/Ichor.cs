@@ -5,7 +5,7 @@ using Quintessential;
 
 namespace Extransmutations2;
 
-using static ETUtils;
+using static IrisUtils;
 using static Extransmutations2;
 
 /// <summary> Ichor Atom stuff </summary>

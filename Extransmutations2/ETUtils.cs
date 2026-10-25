@@ -7,7 +7,7 @@ using Quintessential;
 using static Extransmutations2.Extransmutations2;
 namespace Extransmutations2;
 
-internal static class ETUtils {
+internal static partial class IrisUtils {
   internal const int ARM_COST = 20; 
   internal static string IdStr(string key) => $"{Instance.ModId}:{key}";
   internal static string IdObj(string key) => new Identifier(Instance.ModId, key);
