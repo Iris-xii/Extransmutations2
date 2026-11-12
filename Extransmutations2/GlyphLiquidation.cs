@@ -21,8 +21,8 @@ internal static class GlyphLiquidation {
       isFullHexCover = true,
       glowTexture = Resources.liquidationGlow,
       strokeTexture = Resources.liquidationStroke,
-      baseTexture = Resources.liquidationPanel,
-      hoverTexture = Resources.liquidationPanel,
+      iconTexture = Resources.liquidationPanel,
+      iconHoverTexture = Resources.liquidationPanel,
       glyphHexes = [new(0, 0), new(0, 1), new(-1, 2)],
       CustomPermissionCheck = perms => perms.Contains(ID),
     };
@@ -103,8 +103,8 @@ internal static class GlyphLiquidation {
           HexGrid.standardGrid.ToPixelCoords(liqDownRef.pos),
           Resources.waterDownGlow, 30f, Vector2.Zero, 0f)
         );
-        Resources.liquidationSound.isPlaying = false;
-        Resources.liquidationSound.PlaySound(sim.solutionEditor.method_506());
+        Resources.liquidationSound.playedThisFrame = false;
+        Resources.liquidationSound.PlaySound(sim.solutionEditor.GetVolumeMultiplier());
         return true;
       }
       return false;

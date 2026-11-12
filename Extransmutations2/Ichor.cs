@@ -22,7 +22,7 @@ public static class Ichor {
       if(mol is null) continue;
       foreach(var atom in mol.GetAtoms()) {
         if(atom.Value.atomType.Id != ichorId) continue;
-        ichorSafe.Add(part.InFrontBy(atom.Key));
+        ichorSafe.Add(part.GlobalPosFromLocal(atom.Key));
       }
     }
     foreach(var molecule in sim.molecules) {

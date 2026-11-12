@@ -19,8 +19,8 @@ internal static class GlyphRestoration {
     isFullHexCover = true, // Is a glyph (?)
     glowTexture = Resources.restorationGlow, // Shadow/glow
     strokeTexture = Resources.restorationStroke, // Stroke/outline
-    baseTexture = Resources.restorationPanel, // Panel icon
-    hoverTexture = Resources.restorationPanel, // Hovered panel icon
+    iconTexture = Resources.restorationPanel, // Panel icon
+    iconHoverTexture = Resources.restorationPanel, // Hovered panel icon
     glyphHexes = [new(0, 0), new(1, 0)],
     CustomPermissionCheck = perms => perms.Contains(ID),
   };
@@ -96,26 +96,26 @@ internal static class GlyphRestoration {
             }
             sim.solutionEditor.consumptionEffects.Add(
               new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-              HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(CARD_BOWL)),
+              HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(CARD_BOWL)),
               Resources.bowlGlow, 30f, Vector2.Zero, 0f)
             );
             sim.solutionEditor.consumptionEffects.Add(
               new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-              HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(ICHOR_BOWL)),
+              HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(ICHOR_BOWL)),
               Resources.bowlGlow, 30f, Vector2.Zero, 0f)
             );
             sim.solutionEditor.consumptionEffects.Add(
               new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-              HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(CARD_BOWL)),
+              HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(CARD_BOWL)),
               Resources.anyGlowArray, 30f, Vector2.Zero, 0f)
             );
             sim.solutionEditor.consumptionEffects.Add(
               new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-              HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(ICHOR_BOWL)),
+              HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(ICHOR_BOWL)),
               Resources.ichorGlowArray, 30f, Vector2.Zero, 0f)
             );
-            Resources.restorationSound.isPlaying = false;
-            Resources.restorationSound.PlaySound(sim.solutionEditor.method_506());
+            Resources.restorationSound.playedThisFrame = false;
+            Resources.restorationSound.PlaySound(sim.solutionEditor.GetVolumeMultiplier());
             break;
           }
         }

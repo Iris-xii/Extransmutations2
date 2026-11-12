@@ -22,8 +22,8 @@ internal static class GlyphQuintConjunction {
     isFullHexCover = true,
     glowTexture = Resources.quintConjunction.glow,
     strokeTexture = Resources.quintConjunction.stroke,
-    baseTexture = Resources.quintConjunction.tray,
-    hoverTexture = Resources.quintConjunction.tray,
+    iconTexture = Resources.quintConjunction.tray,
+    iconHoverTexture = Resources.quintConjunction.tray,
     glyphHexes = [CARD_HOLE, QUINT_OUTPUT],
     CustomPermissionCheck = perms => perms.Contains(ID),
   };
@@ -88,7 +88,7 @@ internal static class GlyphQuintConjunction {
       if (sim.GetCycle() == 0) { pPart.Extransmutations2Uint = 0; }
       if (pss.isProcessing) {
         Molecule newMol = new();
-        newMol.AddAtom(new(pss.processingAtoms[0]), part.InFrontBy(QUINT_OUTPUT));
+        newMol.AddAtom(new(pss.processingAtoms[0]), part.GlobalPosFromLocal(QUINT_OUTPUT));
         sim.molecules.Add(newMol);
         pss.isProcessing = false;
         Resources.quintConjunctionFinishSound.EPlay(sim);

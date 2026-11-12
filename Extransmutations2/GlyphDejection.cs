@@ -40,8 +40,8 @@ internal static class GlyphDejection {
       isFullHexCover = true,
       glowTexture = Resources.dejectionGlow,
       strokeTexture = Resources.dejectionStroke,
-      baseTexture = Resources.dejectionPanel,
-      hoverTexture = Resources.dejectionPanel,
+      iconTexture = Resources.dejectionPanel,
+      iconHoverTexture = Resources.dejectionPanel,
       glyphHexes = [
                 new(0, 0),
                 new(1, 0),
@@ -69,7 +69,7 @@ internal static class GlyphDejection {
           var hole = PROD_HOLE[i];
           AtomType target = pss.processingAtoms[i];
           var mol = new Molecule();
-          mol.AddAtom(new(target), part.InFrontBy(hole));
+          mol.AddAtom(new(target), part.GlobalPosFromLocal(hole));
           sim.molecules.Add(mol);
         }
         pss.isProcessing = false;
@@ -82,16 +82,16 @@ internal static class GlyphDejection {
       TryTransmute(sim, part, CARDINAL_BOWL);
       sim.solutionEditor.consumptionEffects.Add(
         new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-        HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(CARDINAL_BOWL)),
+        HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(CARDINAL_BOWL)),
         Resources.bowlGlow, 30f, Vector2.Zero, 0f)
       );
       sim.solutionEditor.consumptionEffects.Add(
         new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-        HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(CARDINAL_BOWL)),
+        HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(CARDINAL_BOWL)),
         Resources.anyGlowArray, 30f, Vector2.Zero, 0f)
       );
-      Resources.dejectionSound.isPlaying = false;
-      Resources.dejectionSound.PlaySound(sim.solutionEditor.method_506());
+      Resources.dejectionSound.playedThisFrame = false;
+      Resources.dejectionSound.PlaySound(sim.solutionEditor.GetVolumeMultiplier());
       return true;
     }));
     (string, GlyphRecipe)[] recipes = [

@@ -21,8 +21,8 @@ internal static class GlyphInduction {
       isFullHexCover = true,
       glowTexture = Resources.inductionGlow,
       strokeTexture = Resources.inductionStroke,
-      baseTexture = Resources.inductionPanel,
-      hoverTexture = Resources.inductionPanel,
+      iconTexture = Resources.inductionPanel,
+      iconHoverTexture = Resources.inductionPanel,
       glyphHexes = [new(0, 0), new(-1, 0)],
       CustomPermissionCheck = perms => perms.Contains(ID),
     };
@@ -57,12 +57,12 @@ internal static class GlyphInduction {
     }
     foreach (var part in sim.solutionEditor.GetSolution().parts) {
       if (part.GetType().Id != ID) continue;
-      pSim.Extransmutations2InductionBowls.Add(part.InFrontBy(BOWL));
-      if (pSim.Extransmutations2InductionHooks.ContainsKey(part.InFrontBy(HOOK))) {
-        pSim.Extransmutations2InductionHooks[part.InFrontBy(HOOK)] += 1;
+      pSim.Extransmutations2InductionBowls.Add(part.GlobalPosFromLocal(BOWL));
+      if (pSim.Extransmutations2InductionHooks.ContainsKey(part.GlobalPosFromLocal(HOOK))) {
+        pSim.Extransmutations2InductionHooks[part.GlobalPosFromLocal(HOOK)] += 1;
       }
       else {
-        pSim.Extransmutations2InductionHooks.Add(part.InFrontBy(HOOK), 1);
+        pSim.Extransmutations2InductionHooks.Add(part.GlobalPosFromLocal(HOOK), 1);
       }
     }
   }
@@ -82,7 +82,7 @@ internal static class GlyphInduction {
     foreach (var KV in pSim.Extransmutations2InductionHooks!) { if (KV.Value > 1) { changed.Remove(KV.Key); } }
     foreach (var part in sim.solutionEditor.GetSolution().parts) {
       if (part.GetType().Id != ID) continue;
-      if (changed.Contains(part.InFrontBy(HOOK))
+      if (changed.Contains(part.GlobalPosFromLocal(HOOK))
       && sim.GetAtomReference(part, BOWL, false, out var saltRef)
       && saltRef.atomType == AtomTypes.salt) {
         sim.RecipeInputs.Clear();
@@ -92,11 +92,11 @@ internal static class GlyphInduction {
         TryTransmute(sim, part, BOWL);
         sim.solutionEditor.consumptionEffects.Add(
           new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-          HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(BOWL)),
+          HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(BOWL)),
           Resources.bowlGlow, 30f, Vector2.Zero, 0f)
         );
-        Resources.inductionSound.isPlaying = false;
-        Resources.inductionSound.PlaySound(sim.solutionEditor.method_506());
+        Resources.inductionSound.playedThisFrame = false;
+        Resources.inductionSound.PlaySound(sim.solutionEditor.GetVolumeMultiplier());
       }
     }
   }

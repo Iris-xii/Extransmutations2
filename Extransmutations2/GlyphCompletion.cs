@@ -72,8 +72,8 @@ internal static class GlyphCompletion {
       isFullHexCover = true, // Is a glyph (?)
       glowTexture = Resources.cardinalCompletionGlow, // Shadow/glow
       strokeTexture = Resources.cardinalCompletionStroke, // Stroke/outline
-      baseTexture = Resources.completionPanel, // Panel icon
-      hoverTexture = Resources.completionPanel, // Hovered panel icon
+      iconTexture = Resources.completionPanel, // Panel icon
+      iconHoverTexture = Resources.completionPanel, // Hovered panel icon
       glyphHexes = [
                 new(0, 0),
                 new(1, 0),
@@ -108,28 +108,28 @@ internal static class GlyphCompletion {
         foreach (var cardPos in CARD_POS) {
           sim.solutionEditor.consumptionEffects.Add(
             new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-            HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(cardPos)),
+            HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(cardPos)),
             Resources.bowlGlow, 30f, Vector2.Zero, 0f)
           );
           sim.solutionEditor.consumptionEffects.Add(
             new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-            HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(cardPos)),
+            HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(cardPos)),
             Resources.anyGlowArray, 30f, Vector2.Zero, 0f)
           );
         }
         sim.solutionEditor.consumptionEffects.Add(
           new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-          HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(SALT_POS)),
+          HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(SALT_POS)),
           Resources.bowlGlow, 30f, Vector2.Zero, 0f)
         );
         sim.solutionEditor.consumptionEffects.Add(
           new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-          HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(SALT_POS)),
+          HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(SALT_POS)),
           Resources.saltGlyphArray, 30f, Vector2.Zero, 0f)
         );
 
-        Resources.cardinalCompletionSound.isPlaying = false;
-        Resources.cardinalCompletionSound.PlaySound(sim.solutionEditor.method_506());
+        Resources.cardinalCompletionSound.playedThisFrame = false;
+        Resources.cardinalCompletionSound.PlaySound(sim.solutionEditor.GetVolumeMultiplier());
         return true;
       }
       return false;

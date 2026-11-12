@@ -34,8 +34,8 @@ internal static class GlyphCompaction {
       isFullHexCover = true,
       glowTexture = Resources.compactionGlow,
       strokeTexture = Resources.compactionStroke,
-      baseTexture = Resources.compactionPanel,
-      hoverTexture = Resources.compactionPanel,
+      iconTexture = Resources.compactionPanel,
+      iconHoverTexture = Resources.compactionPanel,
       glyphHexes = [new(0, 0)],
       CustomPermissionCheck = perms => perms.Contains(ID),
     };
@@ -53,11 +53,11 @@ internal static class GlyphCompaction {
         TryTransmute(sim,part,BOWL);
         sim.solutionEditor.consumptionEffects.Add(
           new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-          HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(BOWL)),
+          HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(BOWL)),
           Resources.bowlGlow, 30f, Vector2.Zero, 0f)
         );
-        Resources.compactionSound.isPlaying = false;
-        Resources.compactionSound.PlaySound(sim.solutionEditor.method_506());
+        Resources.compactionSound.playedThisFrame = false;
+        Resources.compactionSound.PlaySound(sim.solutionEditor.GetVolumeMultiplier());
         return true;
       }
       return false;

@@ -49,8 +49,8 @@ internal static class GlyphRevolution {
     cost = 10, // Cost 
     glowTexture = Glow(v), // Shadow/glow
     strokeTexture = Outline(v), // Stroke/outline
-    baseTexture = Panel(v), // Panel icon
-    hoverTexture = Panel(v), // Hovered panel icon
+    iconTexture = Panel(v), // Panel icon
+    iconHoverTexture = Panel(v), // Hovered panel icon
     glyphHexes = [ // Spaces used
       CalcSpot1(v),
       TransmuteSpot(v),
@@ -152,26 +152,26 @@ internal static class GlyphRevolution {
         TryTransmute(sim,part,TransmuteSpot(v));
         sim.solutionEditor.consumptionEffects.Add(
           new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-          HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(CalcSpot1(v)) ),
+          HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(CalcSpot1(v)) ),
           Resources.calcifyAnimation, 30f, Vector2.Zero, 0f)
         );
         sim.solutionEditor.consumptionEffects.Add(
           new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-          HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(CalcSpot2(v))),
+          HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(CalcSpot2(v))),
           Resources.calcifyAnimation, 30f, Vector2.Zero, 0f)
         );
         sim.solutionEditor.consumptionEffects.Add(
           new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-          HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(TransmuteSpot(v))),
+          HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(TransmuteSpot(v))),
           Resources.bowlGlow, 30f, Vector2.Zero, 0f)
         );
         sim.solutionEditor.consumptionEffects.Add(
           new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-          HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(TransmuteSpot(v))),
+          HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(TransmuteSpot(v))),
           Resources.cycleGlowArray, 30f, Vector2.Zero, 0f)
         ); 
-        Resources.cardinalRotationSound.isPlaying = false; 
-        Resources.cardinalRotationSound.PlaySound(sim.solutionEditor.method_506());
+        Resources.cardinalRotationSound.playedThisFrame = false; 
+        Resources.cardinalRotationSound.PlaySound(sim.solutionEditor.GetVolumeMultiplier());
         return true;
       }
       return false;

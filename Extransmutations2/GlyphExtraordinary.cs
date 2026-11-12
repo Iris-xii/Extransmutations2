@@ -17,8 +17,8 @@ internal static class GlyphExtraordinary {
       isFullHexCover = true,
       glowTexture = Resources.extraordinaryGlow,
       strokeTexture = Resources.extraordinaryStroke,
-      baseTexture = Resources.extraordinaryPanel,
-      hoverTexture = Resources.extraordinaryPanel,
+      iconTexture = Resources.extraordinaryPanel,
+      iconHoverTexture = Resources.extraordinaryPanel,
       glyphHexes = [new(0,0)],
       CustomPermissionCheck = perms => perms.Contains(ID),
       isUnique = true // no point in duplicates

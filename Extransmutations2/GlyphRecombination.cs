@@ -47,8 +47,8 @@ internal static class GlyphRecombination {
       isFullHexCover = true,
       glowTexture = Resources.dejectionGlow,
       strokeTexture = Resources.dejectionStroke,
-      baseTexture = Resources.recombinationPanel,
-      hoverTexture = Resources.recombinationPanel,
+      iconTexture = Resources.recombinationPanel,
+      iconHoverTexture = Resources.recombinationPanel,
       glyphHexes = [
                 new(0, 0),
                 new(1, 0),
@@ -76,16 +76,16 @@ internal static class GlyphRecombination {
 
         sim.solutionEditor.consumptionEffects.Add(
           new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-          HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(ICHOR_BOWL)),
+          HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(ICHOR_BOWL)),
           Resources.bowlGlow, 30f, Vector2.Zero, 0f)
         );
         sim.solutionEditor.consumptionEffects.Add(
           new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-          HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(ICHOR_BOWL)),
+          HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(ICHOR_BOWL)),
           Resources.ichorGlowArray, 30f, Vector2.Zero, 0f)
         );
-        Resources.recombinationSound.isPlaying = false;
-        Resources.recombinationSound.PlaySound(sim.solutionEditor.method_506());
+        Resources.recombinationSound.playedThisFrame = false;
+        Resources.recombinationSound.PlaySound(sim.solutionEditor.GetVolumeMultiplier());
         return true;
       }
       return false;

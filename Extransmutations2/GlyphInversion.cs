@@ -38,8 +38,8 @@ internal static class GlyphInversion {
       isFullHexCover = true, // Is a glyph (?)
       glowTexture = Resources.cardinalInversionGlow, // Shadow/glow
       strokeTexture = Resources.cardinalInversionStroke, // Stroke/outline
-      baseTexture = Resources.inversionPanel, // Panel icon
-      hoverTexture = Resources.inversionPanel, // Hovered panel icon
+      iconTexture = Resources.inversionPanel, // Panel icon
+      iconHoverTexture = Resources.inversionPanel, // Hovered panel icon
       glyphHexes = [
                 new(0, 0),
                 new(1, 0),
@@ -64,21 +64,21 @@ internal static class GlyphInversion {
         TryTransmute(sim,part,TRAN_SPOT);
         sim.solutionEditor.consumptionEffects.Add(
           new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-          HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(CALC_SPOT) ),
+          HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(CALC_SPOT) ),
           Resources.calcifyAnimation, 30f, Vector2.Zero, 0f)
         );
         sim.solutionEditor.consumptionEffects.Add(
           new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-          HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(TRAN_SPOT) ),
+          HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(TRAN_SPOT) ),
           Resources.bowlGlow, 30f, Vector2.Zero, 0f)
         );
         sim.solutionEditor.consumptionEffects.Add(
           new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-          HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(TRAN_SPOT) ),
+          HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(TRAN_SPOT) ),
           Resources.inversionGlowArray, 30f, Vector2.Zero, 0f)
         );
-        Resources.cardinalInversionSound.isPlaying = false; 
-        Resources.cardinalInversionSound.PlaySound(sim.solutionEditor.method_506());
+        Resources.cardinalInversionSound.playedThisFrame = false; 
+        Resources.cardinalInversionSound.PlaySound(sim.solutionEditor.GetVolumeMultiplier());
         return true;
       }
       return false;

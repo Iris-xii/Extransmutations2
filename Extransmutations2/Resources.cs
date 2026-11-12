@@ -148,9 +148,9 @@ internal static class Resources {
 
   internal static Sound Sound(string sRaw, float volume = 0.4f) { 
     string fullPath = Path.Combine(Instance.Meta.PathToDirectory,$"Content/sounds/{sRaw}.wav") ;
-    AudioFile audio = AudioManager.layer_0_LoadAudioFile(fullPath);
+    AudioSource audio = AudioManager.layer_0_CreateAudioSource(fullPath);
     Sound sound = new() {
-      field_4061 = audio,
+      audioSource = audio,
       id = $"{Instance.ModId}:{sRaw}"
     };
     patch_Volume.volumeDict.Add(sound.id, volume);

@@ -37,8 +37,8 @@ internal static class GlyphAeration {
       isFullHexCover = true,
       glowTexture = Resources.aerationGlow,
       strokeTexture = Resources.aerationStroke,
-      baseTexture = Resources.aerationPanel,
-      hoverTexture = Resources.aerationPanel,
+      iconTexture = Resources.aerationPanel,
+      iconHoverTexture = Resources.aerationPanel,
       glyphHexes = [
                 new(0, 0),
                 new(1, 0),
@@ -64,7 +64,7 @@ internal static class GlyphAeration {
     (sim, part, pss, recipe, isCycleStart) => {
       if (pss.isProcessing) {
         Molecule newMol = new();
-        newMol.AddAtom(new(pss.processingAtoms[0]), part.InFrontBy(OUT_SPOT));
+        newMol.AddAtom(new(pss.processingAtoms[0]), part.GlobalPosFromLocal(OUT_SPOT));
         sim.molecules.Add(newMol);
         pss.isProcessing = false;
       }
@@ -74,11 +74,11 @@ internal static class GlyphAeration {
           pss.processingAtoms ??= [null];
           pss.processingAtoms[0] = outA;
           pss.isProcessing = true;
-          Resources.aerationSound.isPlaying = false;
-          Resources.aerationSound.PlaySound(sim.solutionEditor.method_506());
+          Resources.aerationSound.playedThisFrame = false;
+          Resources.aerationSound.PlaySound(sim.solutionEditor.GetVolumeMultiplier());
           sim.solutionEditor.consumptionEffects.Add(
             new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-            HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(new(0, 0))),
+            HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(new(0, 0))),
             Resources.aerationBreathe, 30f, Vector2.Zero, part.GetRotation().ToRadians())
           );
         }

@@ -13,8 +13,8 @@ internal static partial class IrisUtils {
   internal static string IdObj(string key) => new Identifier(Instance.ModId, key);
   internal static bool AlwaysTrueCheck(Sim _,Part __) => true;
   internal static void EPlay(this Sound sound, Sim sim) {
-    sound.isPlaying = false;
-    sound.PlaySound(sim.solutionEditor.method_506());
+    sound.playedThisFrame = false;
+    sound.PlaySound(sim.solutionEditor.GetVolumeMultiplier());
   }
   internal static bool HasTag(AtomReference ar, Identifier tag) {
     if (!AtomTag.AtomTags.TryGetValue(tag, out var atomTag)) return false;
@@ -88,7 +88,7 @@ internal static partial class IrisUtils {
       if (delAnim == DelAnim.DISPOSAL) {
         sim.solutionEditor.glyphEffects.Add(
           new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-          HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(partPos)),
+          HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(partPos)),
           Resources.destroyAnim, 30f, offsetFlash, 0f)
         );
       }
@@ -102,11 +102,11 @@ internal static partial class IrisUtils {
     && !sim.HasAtomAt(part, partPos, true)) {
       if (prodType == ProdType.APPEAR) {
         Molecule newMol = new();
-        newMol.AddAtom(new(onlyOut), part.InFrontBy(partPos));
+        newMol.AddAtom(new(onlyOut), part.GlobalPosFromLocal(partPos));
         sim.molecules.Add(newMol);
         sim.solutionEditor.glyphEffects.Add(
           new GlyphEffect(sim.solutionEditor, EffectTimescaleType.RealTime,
-          HexGrid.standardGrid.ToPixelCoords(part.InFrontBy(partPos)),
+          HexGrid.standardGrid.ToPixelCoords(part.GlobalPosFromLocal(partPos)),
           Resources.destroyAnim, 30f, offsetFlash, 0f)
         );
       }
